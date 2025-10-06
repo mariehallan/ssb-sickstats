@@ -1,0 +1,1 @@
+# Lagre relevant data fra SSB til egen database

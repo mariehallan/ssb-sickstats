@@ -15,10 +15,13 @@ def fetch_sickdata_from_ssb():
 
     response = requests.get(ssb_api_url, timeout=30)
     
-    response.raise_for_status()
-    print(f"SSB respons:", response)
+    response.raise_for_status() # Stopp programmet hvis ikke 200 OK
 
-    response_json = response.json()
-    print(f"Response JSON keys: {response_json.keys()}") 
+    # Lagre data fra SSB spørring i en dataset
+    dataset = pyjstat.Dataset.read(response.text)
+
+    # Skrive inn data til pandas DataFrame
+    dataframe = dataset.write('dataframe')
     
-    return pandas.DataFrame(response.json())  # evt. parse JSON-stat/CSV
+ 
+    return dataframe

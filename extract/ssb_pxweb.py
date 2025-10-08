@@ -10,10 +10,10 @@ def fetch_sickdata_from_ssb():
     # Info om tabellen: https://www.ssb.no/statbank/table/12440
     # Eksempel fra SSB: https://www.ssb.no/api/pxwebapi/api-eksempler-pa-kode/json-stat-til-pandas-dataframe-funksjon
     
-    ssb_api_url = f"https://data.ssb.no/api/pxwebapi/v2/tables/12440/data?lang=en"
-    print(f"Henter data fra SSB tabell 12440 med query {query}")
+    ssb_api_url = f"https://data.ssb.no/api/pxwebapi/v2/tables/12440/data?lang=no&valueCodes[ContentsCode]=SykefravProsent&codelist[NACE2007]=vs_NACE260sykefratot4&valueCodes[Kjonn]=2,1&valueCodes[NACE2007]=61-63,86&valueCodes[Tid]=from(2005K1)"
+    print(f"Henter data fra SSB tabell 12440 av sykefraværsprosent for næring IKT-virksomhet og Helsetjenester fra 2005")
 
-    response = requests.get(ssb_api_url, params=query, timeout=30)
+    response = requests.get(ssb_api_url, timeout=30)
     
     response.raise_for_status()
     print(f"SSB respons:", response)

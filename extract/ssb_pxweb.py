@@ -1,10 +1,14 @@
 # Hente statestikk fra SSB's APIer
-import requests, pandas
+import json
+import requests 
+import pandas
+from pyjstat import pyjstat
 
-def fetch_sickdata_from_ssb(query):
-    # Doc: https://www.ssb.no/en/api/statbank-pxwebapi-user-guide
-    # The limits per extract are 800,000 data cells, and the number of queries is currently 30 per minute
-    # PxWeb v2 bruker POST/GET med spesifisert query; svar i JSON/CSV.
+def fetch_sickdata_from_ssb():
+    # Dokumentasjon fra SSB: https://www.ssb.no/en/api/statbank-pxwebapi-user-guide
+        # The limits per extract are 800,000 data cells, and the number of queries is currently 30 per minute
+    # Info om tabellen: https://www.ssb.no/statbank/table/12440
+    # Eksempel fra SSB: https://www.ssb.no/api/pxwebapi/api-eksempler-pa-kode/json-stat-til-pandas-dataframe-funksjon
     
     ssb_api_url = f"https://data.ssb.no/api/pxwebapi/v2/tables/12440/data?lang=en"
     print(f"Henter data fra SSB tabell 12440 med query {query}")

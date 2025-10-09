@@ -21,7 +21,7 @@ def fetch_sickdata_from_ssb():
     dataset = pyjstat.Dataset.read(response.text)
 
     # Skrive inn data til pandas DataFrame
-    dataframe = dataset.write('dataframe')
-    
+    dataframe = dataset.write('dataframe') 
+    # Kolonner: kjønn; næring (SN2007);  statistikkvariabel; kvartal;  value
  
     return dataframe

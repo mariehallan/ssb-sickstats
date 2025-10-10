@@ -23,15 +23,25 @@ def parse_quarter(quarter_str: str) -> dict:
 
 def clean_ssb_dataframe(original_dataframe: pd.DataFrame) -> pd.DataFrame:
 	"""Rename kolonner og fjerne unødvendige kolonner."""
-	
+
 	dataframe = original_dataframe.copy()
-	
-    # TODO: fjerne "statistikkvariabel" kolonnen
-    # TODO: rename kolonnene  "value" kolonnen til "fraværsprosent" og "næring (SN2007)" til bare "næring", kanskje via dataframe = dataframe.rename(columns=rename_map)
 
 
-	parsed_quarter = map(parse_quarter, dataframe['kvartal'].astype(str))
+	parsed_quarter = dataframe['kvartal'].astype(str).apply(parse_quarter)
 	dataframe['år'] = parsed_quarter.apply(lambda quarter_dict: quarter_dict['yyyy'])
 	dataframe['kvartal'] = parsed_quarter.apply(lambda quarter_dict: quarter_dict['k'])
+
+	# renameing av kolonner
+	renamed_columns = {
+		'kjønn': 'Kjønn',
+		'næring (SN2007)': 'Næring',
+		'år': 'År',
+		'kvartal': 'Kvartal',
+		'value': 'Fraværsprosent'
+	}
+	dataframe.columns = [renamed_columns.get(col, col) for col in dataframe.columns]
+
+	# Fjerne unødvendig "statistikkvariabel" kolonne
+	dataframe.drop('statistikkvariabel', axis=1, inplace=True)
 
 	return dataframe
